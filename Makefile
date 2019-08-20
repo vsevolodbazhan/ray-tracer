@@ -14,19 +14,19 @@ OBJECTS = $(patsubst $(SOUCRE_DIR)/%, $(BUILD_DIR)/%, $(SOURCES:.cpp=.o))
 DEPENDS = $(OBJECTS:.o=.d)
 
 CXX = g++-9
-CXXFLAGS = -O2 -std=c++17 -Werror -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast                \
+CXX_FLAGS = -O2 -std=c++17 -Werror -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast               \
 	-Wcast-align -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion -Wmisleading-indentation      \
 	-Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wnull-dereference -Wuseless-cast -Wdouble-promotion \
 
 CHECK = cppcheck
-CHECKFLAGS = -I $(INCLUDE_DIR) --language=c++ --std=c++17 --enable=all --suppress=missingIncludeSystem .
+CHECK_FLAGS = -I $(INCLUDE_DIR) --language=c++ --std=c++17 --enable=all --suppress=missingIncludeSystem .
 
 .PHONY: all
 all: $(TARGET)
 
 .PHONY: check
 check:
-	$(QUIET)$(CHECK) $(CHECKFLAGS) $(SOUCRE_DIR)
+	$(QUIET)$(CHECK) $(CHECK_FLAGS) $(SOUCRE_DIR)
 
 .PHONY: run
 run:
@@ -48,4 +48,4 @@ $(TARGET): $(OBJECTS)
 
 $(BUILD_DIR)/%.o: $(SOUCRE_DIR)/%.cpp
 	$(QUIET)mkdir -p $(@D)
-	$(QUIET)$(CXX) -I $(INCLUDE_DIR) $(CXXFLAGS) -MMD -c $< -o $@
+	$(QUIET)$(CXX) -I $(INCLUDE_DIR) $(CXX_FLAGS) -MMD -c $< -o $@
