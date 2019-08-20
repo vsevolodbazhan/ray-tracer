@@ -25,7 +25,7 @@ CXXFLAGS = -O2 -std=c++17 -Werror -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wol
 
 # Cppcheck integration
 CHECK = cppcheck
-CHECKFLAGS = $(INC) --language=c++ --std=c++17 --enable=all --suppress=missingIncludeSystem .
+CHECKFLAGS = -I $(INCLUDE_DIR) --language=c++ --std=c++17 --enable=all --suppress=missingIncludeSystem .
 
 .PHONY: all
 all: $(TARGET)
