@@ -1,13 +1,14 @@
 #pragma once
 
+#include "Position.hpp"
+
 #include "Color/RGBColor.hpp"
-#include "Math/Point2D.hpp"
 
 #include <cstddef>
 
 namespace Graphics {
   struct Pixel {
-    Math::Point2D<std::size_t> position;
+    Position position;
     Color::RGBColor color;
   };
-};
+}
