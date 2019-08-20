@@ -1,0 +1,70 @@
+#pragma once
+
+#include "Point3D.hpp"
+
+#include <cmath>
+#include <tuple>
+#include <utility>
+
+namespace Math {
+  class Vector3D {
+  public:
+    Vector3D();
+    Vector3D(double x, double y, double z);
+    explicit Vector3D(const Point3D<double> point);
+    Vector3D(const Vector3D& other);
+    Vector3D(Vector3D&& other);
+
+    void Negate();
+    void Normalize();
+
+    double LengthSquared() const;
+    double Length() const;
+
+    Vector3D& operator+=(const Vector3D& other);
+    Vector3D& operator-=(const Vector3D& other);
+
+    Vector3D& operator+=(double scalar);
+    Vector3D& operator-=(double scalar);
+    Vector3D& operator*=(double scalar);
+    Vector3D& operator/=(double scalar);
+
+    void SetX(double x);
+    void SetY(double y);
+    void SetZ(double z);
+
+    double GetX() const;
+    double GetY() const;
+    double GetZ() const;
+
+  private:
+    Point3D<double> point_;
+  };
+
+  double Dot(const Vector3D& lhs, const Vector3D& rhs);
+  double Angle(const Vector3D& lhs, const Vector3D& rhs);
+
+  Vector3D Cross(const Vector3D& lhs, const Vector3D& rhs);
+  Vector3D Normalized(const Vector3D& vector);
+  Vector3D Negated(const Vector3D& vector);
+
+  inline Vector3D operator+(Vector3D lhs, const Vector3D& rhs) {
+    lhs += rhs;
+    return lhs;
+  }
+
+  inline Vector3D operator-(Vector3D lhs, const Vector3D& rhs) {
+    lhs -= rhs;
+    return lhs;
+  }
+
+  inline Vector3D operator*(Vector3D lhs, double rhs) {
+    lhs *= rhs;
+    return lhs;
+  }
+
+  inline Vector3D operator*(double lhs, Vector3D rhs) {
+    rhs *= lhs;
+    return rhs;
+  }
+}
