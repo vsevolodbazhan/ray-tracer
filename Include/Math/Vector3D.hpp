@@ -11,7 +11,7 @@ namespace Math {
   public:
     Vector3D();
     Vector3D(double x, double y, double z);
-    explicit Vector3D(const Point3D<double> point);
+    explicit Vector3D(const Point3D<double>& point);
     Vector3D(const Vector3D& other);
     Vector3D(Vector3D&& other);
 

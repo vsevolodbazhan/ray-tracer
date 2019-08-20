@@ -5,7 +5,7 @@ namespace Math {
 
   Vector3D::Vector3D(double x, double y, double z) : point_{x, y, z} {}
 
-  Vector3D::Vector3D(const Point3D<double> point) : point_(point) {}
+  Vector3D::Vector3D(const Point3D<double>& point) : point_(point) {}
 
   Vector3D::Vector3D(const Vector3D& other) : point_(other.point_) {}
 
