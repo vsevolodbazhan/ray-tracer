@@ -1,6 +1,8 @@
 #include "Graphics/Image.hpp"
 
 namespace Graphics {
+  Image::Image() : properties_{} {}
+
   Image::Image(const Properties& properties) : properties_(properties), pixels_(properties.width * properties.height) {
     Position current_position{0, 0};
     for (Pixel& pixel : pixels_) {

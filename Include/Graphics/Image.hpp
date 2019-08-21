@@ -18,7 +18,8 @@ namespace Graphics {
     using PixelsIterator = Pixels::iterator;
     using ConstPixelsIterator = Pixels::const_iterator;
 
-    Image(const Properties& properties);
+    Image();
+    explicit Image(const Properties& properties);
 
     virtual ~Image() = default;
 

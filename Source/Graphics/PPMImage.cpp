@@ -1,6 +1,8 @@
 #include "Graphics/PPMImage.hpp"
 
 namespace Graphics {
+  PPMImage::PPMImage() : Image() {}
+
   PPMImage::PPMImage(const Properties& properties) : Image(properties) {}
 
   void PPMImage::Export(const std::string& filename) const {
