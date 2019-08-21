@@ -7,7 +7,6 @@ namespace Graphics {
     Position current_position{0, 0};
     for (Pixel& pixel : pixels_) {
       pixel.position = current_position;
-      pixel.color = properties_.background;
       if (++current_position.x == properties_.width) {
         current_position.x = 0;
         ++current_position.y;
