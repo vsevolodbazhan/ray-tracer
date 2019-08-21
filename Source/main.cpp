@@ -6,8 +6,6 @@
 #include "Object/Sphere.hpp"
 #include "Surface/Material.hpp"
 
-#include "profile.hpp"
-
 using namespace Color;
 using namespace Core;
 using namespace Graphics;

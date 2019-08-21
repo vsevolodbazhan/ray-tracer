@@ -1,10 +1,12 @@
 #pragma once
 
-#include "Intensity.hpp"
-
 #include "Math/Vector3D.hpp"
 
 namespace Illumination {
+  struct Intensity {
+    double ambient;
+  };
+
   class Light {
   public:
     Light() = delete;
