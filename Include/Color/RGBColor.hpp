@@ -1,17 +1,24 @@
 #pragma once
 
 #include <algorithm>
+#include <utility>
 
 namespace Color {
   class RGBColor {
   public:
     RGBColor();
     RGBColor(double red, double green, double blue);
+    RGBColor(const RGBColor& other);
+    RGBColor(RGBColor&& other);
+
+    RGBColor& operator=(const RGBColor& other);
+    RGBColor& operator=(RGBColor&& other);
 
     RGBColor& operator+=(const RGBColor& other);
     RGBColor& operator-=(const RGBColor& other);
     RGBColor& operator*=(const RGBColor& other);
     RGBColor& operator/=(const RGBColor& other);
+
     RGBColor& operator*=(double scalar);
     RGBColor& operator/=(double scalar);
 
