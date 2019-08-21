@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Point3D.hpp"
-
 #include <cmath>
 #include <tuple>
 #include <utility>
