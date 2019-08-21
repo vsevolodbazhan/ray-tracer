@@ -11,6 +11,6 @@ namespace Core {
     Math::Vector3D direction;
   };
 
-  Ray CreateRay(const Graphics::PixelPosition& position, const Graphics::ImageProperties& properties,
-    const Object::Camera& camera);
+  Ray CreateRay(const Graphics::PixelPosition& position, const Graphics::PixelOffset& offset,
+                const Graphics::ImageProperties& properties, const Object::Camera& camera);
 }
