@@ -24,6 +24,18 @@ namespace Math {
     point_.z = -point_.z;
   }
 
+  Vector3D& Vector3D::operator=(const Vector3D& other) {
+    if (this != &other) {
+      point_ = other.point_;
+    }
+    return *this;
+  }
+
+  Vector3D& Vector3D::operator=(Vector3D&& other) {
+    point_ = std::move(other.point_);
+    return *this;
+  }
+
   Vector3D& Vector3D::operator+=(const Vector3D& other) {
     point_.x += other.point_.x;
     point_.y += other.point_.y;

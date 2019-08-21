@@ -21,11 +21,12 @@ namespace Math {
     double LengthSquared() const;
     double Length() const;
 
+    Vector3D& operator=(const Vector3D& other);
+    Vector3D& operator=(Vector3D&& other);
+
     Vector3D& operator+=(const Vector3D& other);
     Vector3D& operator-=(const Vector3D& other);
 
-    Vector3D& operator+=(double scalar);
-    Vector3D& operator-=(double scalar);
     Vector3D& operator*=(double scalar);
     Vector3D& operator/=(double scalar);
 
