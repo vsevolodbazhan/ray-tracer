@@ -1,6 +1,7 @@
 # Project
 Binary
 Build
+*.ppm
 
 # macOS
 .DS_Store
