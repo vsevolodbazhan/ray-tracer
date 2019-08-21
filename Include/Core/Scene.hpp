@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Color/RGBColor.hpp"
 #include "Graphics/Image.hpp"
 #include "Illumination/Light.hpp"
 #include "Math/Ray.hpp"
@@ -34,6 +35,8 @@ namespace Core {
 
   private:
     void SortShapes();
+
+    Color::RGBColor Trace(const Math::Ray& ray);
 
     GenericImage image_;
     Object::Camera camera_;

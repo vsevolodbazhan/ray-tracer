@@ -1,5 +1,6 @@
 #include "Core/Scene.hpp"
 
+using namespace Color;
 using namespace Graphics;
 using namespace Illumination;
 using namespace Math;
@@ -19,7 +20,13 @@ namespace Core {
     shapes_.push_back(std::move(shape));
   }
 
-  void Render(const std::string& filename);
+  void Scene::Render(const std::string& filename) {
+    SortShapes();
+    for (auto& pixel : *image_.get()) {
+      pixel.color = Trace(Ray(pixel.position, image_->GetProperties(), field_of_view_));
+    }
+    image_->Export(filename);
+  }
 
   void Scene::SetCameraPosition(const Math::Vector3D& position) {
     camera_.position = position;
@@ -33,5 +40,16 @@ namespace Core {
     std::sort(shapes_.begin(), shapes_.end(), [this](const GenericShape& lhs, const GenericShape& rhs) {
       return lhs->DistanceFrom(camera_) < rhs->DistanceFrom(camera_);
     });
+  }
+
+  RGBColor Scene::Trace(const Math::Ray& ray) {
+    RGBColor color;
+    for (const auto& shape : shapes_) {
+      Vector3D intersection;
+      if (shape->Intersects(ray, intersection)) {
+        color = shape->GetAmbient();
+      }
+    }
+    return color;
   }
 }
