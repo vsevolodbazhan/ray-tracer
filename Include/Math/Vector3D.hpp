@@ -7,13 +7,10 @@
 #include <utility>
 
 namespace Math {
-  class Vector3D {
-  public:
-    Vector3D();
-    Vector3D(double x, double y, double z);
-    explicit Vector3D(const Point3D<double>& point);
-    Vector3D(const Vector3D& other);
-    Vector3D(Vector3D&& other);
+  struct Vector3D {
+    double x = 0.0;
+    double y = 0.0;
+    double z = 0.0;
 
     void Negate();
     void Normalize();
@@ -21,25 +18,11 @@ namespace Math {
     double LengthSquared() const;
     double Length() const;
 
-    Vector3D& operator=(const Vector3D& other);
-    Vector3D& operator=(Vector3D&& other);
-
     Vector3D& operator+=(const Vector3D& other);
     Vector3D& operator-=(const Vector3D& other);
 
     Vector3D& operator*=(double scalar);
     Vector3D& operator/=(double scalar);
-
-    void SetX(double x);
-    void SetY(double y);
-    void SetZ(double z);
-
-    double GetX() const;
-    double GetY() const;
-    double GetZ() const;
-
-  private:
-    Point3D<double> point_;
   };
 
   double Dot(const Vector3D& lhs, const Vector3D& rhs);

@@ -10,7 +10,7 @@ namespace Object {
     radius_(radius) {}
 
   double Sphere::DistanceFrom(const Camera& camera) const {
-    const Math::Vector3D anchor(camera.position.GetX(), camera.position.GetY(), (center_.GetZ() + radius_));
+    const Math::Vector3D anchor{camera.position.x, camera.position.y, (center_.z + radius_)};
     return (anchor - camera.position).Length();
   }
 

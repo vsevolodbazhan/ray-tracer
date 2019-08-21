@@ -7,7 +7,7 @@ using namespace Math;
 using namespace Object;
 
 namespace Core {
-  Scene::Scene(GenericImage image) : image_(std::move(image)), camera_{Vector3D(0, 0, 0)}, field_of_view_(45) {}
+  Scene::Scene(GenericImage image) : image_(std::move(image)), camera_{Vector3D{0, 0, 0}}, field_of_view_(45) {}
 
   Scene::Scene(GenericImage image, const Camera& camera, double field_of_view)
     : image_(std::move(image)), camera_(camera), field_of_view_(field_of_view) {}
