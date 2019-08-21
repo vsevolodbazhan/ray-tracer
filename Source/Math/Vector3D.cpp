@@ -1,7 +1,7 @@
 #include "Math/Vector3D.hpp"
 
 namespace Math {
-  Vector3D::Vector3D() {}
+  Vector3D::Vector3D() : point_{0.0, 0.0, 0.0} {}
 
   Vector3D::Vector3D(double x, double y, double z) : point_{x, y, z} {}
 
