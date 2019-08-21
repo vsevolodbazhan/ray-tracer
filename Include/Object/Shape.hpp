@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Camera.hpp"
+
 #include "Color/RGBColor.hpp"
 #include "Math/Ray.hpp"
 #include "Math/Vector3D.hpp"
@@ -13,7 +15,7 @@ namespace Object {
 
     virtual ~Shape() = default;
 
-    virtual double Anchor() const = 0;
+    virtual double DistanceFrom(const Camera& camera) const = 0;
     virtual Math::Vector3D Normal(const Math::Vector3D& point) const = 0;
     virtual bool Intersects(const Math::Ray& ray, Math::Vector3D& intersection) const = 0;
 
