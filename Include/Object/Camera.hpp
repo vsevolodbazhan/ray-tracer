@@ -5,5 +5,6 @@
 namespace Object {
   struct Camera {
     Math::Vector3D position;
+    double field_of_view;
   };
 }
