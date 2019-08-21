@@ -2,6 +2,9 @@
 
 #include "Vector3D.hpp"
 
+#include "Graphics/Position.hpp"
+#include "Graphics/Properties.hpp"
+
 #include <utility>
 
 namespace Math {
@@ -10,6 +13,7 @@ namespace Math {
     Ray();
     explicit Ray(const Vector3D& direction);
     Ray(const Vector3D& origin, const Vector3D& direction);
+    Ray(const Graphics::Position& position, const Graphics::Properties& properties, double field_of_view);
     Ray(const Ray& other);
     Ray(Ray&& other);
 
@@ -17,6 +21,10 @@ namespace Math {
     Vector3D GetDirection() const;
 
   private:
+    double DirectionX(double x, double width, double aspect_ratio) const;
+    double DirectionY(double y, double height) const;
+    double DirectionZ(double field_of_view) const;
+
     Vector3D origin_;
     Vector3D direction_;
   };
