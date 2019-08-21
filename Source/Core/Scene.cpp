@@ -1,5 +1,7 @@
 #include "Core/Scene.hpp"
 
+#include <iostream>
+
 using namespace Color;
 using namespace Graphics;
 using namespace Illumination;
@@ -7,10 +9,7 @@ using namespace Math;
 using namespace Object;
 
 namespace Core {
-  Scene::Scene(GenericImage image) : image_(std::move(image)), camera_{Vector3D{0, 0, 0}}, field_of_view_(45) {}
-
-  Scene::Scene(GenericImage image, const Camera& camera, double field_of_view)
-    : image_(std::move(image)), camera_(camera), field_of_view_(field_of_view) {}
+  Scene::Scene(GenericImage image, const Camera& camera) : image_(std::move(image)), camera_(camera) {}
 
   void Scene::AddLight(GenericLight light) {
     lights_.push_back(std::move(light));
@@ -20,8 +19,11 @@ namespace Core {
     shapes_.push_back(std::move(shape));
   }
 
-  void Scene::Render(const std::string& filename) {
+  void Scene::Render(const std::string& filename, bool supersampling) {
     SortShapes();
+    for (auto& pixel : *image_.get()) {
+      pixel.color = Raytrace(pixel.position, supersampling);
+    }
     image_->Export(filename);
   }
 
@@ -39,7 +41,22 @@ namespace Core {
     });
   }
 
-  RGBColor Scene::Trace(const Ray& ray) {
+  RGBColor Scene::Raytrace(const Graphics::PixelPosition& position, bool supersampling) const {
+    RGBColor color;
+    if (supersampling) {
+      std::vector<PixelOffset> sample_offsets{
+        {0.25, 0.25}, {0.75, 0.25}, {0.5, 0.5}, {0.25, 0.75}, {0.75, 0.75}
+      };
+      for (const auto& offset : sample_offsets) {
+        color += Trace(CreateRay(position, offset, image_->GetProperties(), camera_)) / 5;
+      }
+    } else {
+      color = Trace(CreateRay(position, {0.5, 0.5}, image_->GetProperties(), camera_));
+    }
+    return color;
+  }
+
+  RGBColor Scene::Trace(const Ray& ray) const {
     RGBColor color;
     for (const auto& shape : shapes_) {
       Vector3D intersection;
