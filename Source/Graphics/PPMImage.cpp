@@ -3,7 +3,7 @@
 namespace Graphics {
   PPMImage::PPMImage() : Image() {}
 
-  PPMImage::PPMImage(const Properties& properties) : Image(properties) {}
+  PPMImage::PPMImage(const ImageProperties& properties) : Image(properties) {}
 
   void PPMImage::Export(const std::string& filename) const {
     std::ofstream file(filename + ".ppm", std::ios::binary);

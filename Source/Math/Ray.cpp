@@ -9,7 +9,7 @@ namespace Math {
 
   Ray::Ray(const Vector3D& origin, const Vector3D& direction) : origin_(origin), direction_(direction) {}
 
-  Ray::Ray(const Position& position, const Properties& properties, double field_of_view) : origin_(0, 0, 0) {
+  Ray::Ray(const PixelPosition& position, const ImageProperties& properties, double field_of_view) : origin_(0, 0, 0) {
     const double real_x = static_cast<double>(position.x);
     const double real_y = static_cast<double>(position.y);
     const double real_width = static_cast<double>(properties.width);

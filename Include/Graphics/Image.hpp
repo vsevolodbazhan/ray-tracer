@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Pixel.hpp"
-#include "Properties.hpp"
 
 #include "Color/RGBColor.hpp"
 
@@ -12,6 +11,12 @@
 #include <string>
 
 namespace Graphics {
+  struct ImageProperties {
+    std::size_t width = 0;
+    std::size_t height = 0;
+    double aspect_ratio = static_cast<double>(width) / static_cast<double>(height);
+  };
+
   class Image {
   public:
     using Pixels = std::list<Pixel>;
@@ -19,7 +24,7 @@ namespace Graphics {
     using ConstPixelsIterator = Pixels::const_iterator;
 
     Image();
-    explicit Image(const Properties& properties);
+    explicit Image(const ImageProperties& properties);
 
     virtual ~Image() = default;
 
@@ -31,13 +36,13 @@ namespace Graphics {
     const ConstPixelsIterator begin() const;
     const ConstPixelsIterator end() const;
 
-    Properties GetProperties() const;
+    ImageProperties GetProperties() const;
 
   protected:
     uint8_t ConvertToOctet(double compenent) const;
 
   private:
-    Properties properties_;
+    ImageProperties properties_;
     std::list<Pixel> pixels_;
   };
 }

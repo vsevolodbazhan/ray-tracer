@@ -2,8 +2,8 @@
 
 #include "Vector3D.hpp"
 
-#include "Graphics/Position.hpp"
-#include "Graphics/Properties.hpp"
+#include "Graphics/Image.hpp"
+#include "Graphics/Pixel.hpp"
 
 #include <utility>
 
@@ -13,7 +13,7 @@ namespace Math {
     Ray();
     explicit Ray(const Vector3D& direction);
     Ray(const Vector3D& origin, const Vector3D& direction);
-    Ray(const Graphics::Position& position, const Graphics::Properties& properties, double field_of_view);
+    Ray(const Graphics::PixelPosition& position, const Graphics::ImageProperties& properties, double field_of_view);
     Ray(const Ray& other);
     Ray(Ray&& other);
 

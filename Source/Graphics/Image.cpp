@@ -3,8 +3,8 @@
 namespace Graphics {
   Image::Image() : properties_{} {}
 
-  Image::Image(const Properties& properties) : properties_(properties), pixels_(properties.width * properties.height) {
-    Position current_position{0, 0};
+  Image::Image(const ImageProperties& properties) : properties_(properties), pixels_(properties.width * properties.height) {
+    PixelPosition current_position{0, 0};
     for (Pixel& pixel : pixels_) {
       pixel.position = current_position;
       if (++current_position.x == properties_.width) {
@@ -14,7 +14,7 @@ namespace Graphics {
     }
   }
 
-  Properties Image::GetProperties() const {
+  ImageProperties Image::GetProperties() const {
     return properties_;
   }
 
