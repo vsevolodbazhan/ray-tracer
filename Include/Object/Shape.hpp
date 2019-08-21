@@ -3,7 +3,7 @@
 #include "Camera.hpp"
 
 #include "Color/RGBColor.hpp"
-#include "Math/Ray.hpp"
+#include "Core/Ray.hpp"
 #include "Math/Vector3D.hpp"
 #include "Surface/Material.hpp"
 
@@ -17,7 +17,7 @@ namespace Object {
 
     virtual double DistanceFrom(const Camera& camera) const = 0;
     virtual Math::Vector3D Normal(const Math::Vector3D& point) const = 0;
-    virtual bool Intersects(const Math::Ray& ray, Math::Vector3D& intersection) const = 0;
+    virtual bool Intersects(const Core::Ray& ray, Math::Vector3D& intersection) const = 0;
 
     Color::RGBColor GetAmbient() const;
 

@@ -18,11 +18,11 @@ namespace Object {
     return Normalized(point - center_);
   }
 
-  bool Sphere::Intersects(const Math::Ray& ray, Math::Vector3D& intersection) const {
-    const Math::Vector3D origin_center = center_ - ray.GetOrigin();
+  bool Sphere::Intersects(const Core::Ray& ray, Math::Vector3D& intersection) const {
+    const Math::Vector3D origin_center = center_ - ray.origin;
     // Find the distance from the ray origin to the intersection point or
     // the point located halfway between two intersection points.
-    const double origin_point_distance = Dot(origin_center, ray.GetDirection());
+    const double origin_point_distance = Dot(origin_center, ray.direction);
     // If this distance is negative then the vector originating from the ray origin and pointing
     // to the center of the sphere is directed opposite to the ray direciton.
     // Which means that ray doesn't intersect the sphere.
@@ -45,7 +45,7 @@ namespace Object {
     );
     // The closest (or the only) intersection point
     // is to the left of the point located halfway between two intersection points.
-    intersection = ray.GetOrigin() + ray.GetDirection() * (origin_point_distance - point_intersection_distance);
+    intersection = ray.origin + ray.direction * (origin_point_distance - point_intersection_distance);
     return true;
   }
 

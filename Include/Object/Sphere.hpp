@@ -3,7 +3,7 @@
 #include "Camera.hpp"
 #include "Shape.hpp"
 
-#include "Math/Ray.hpp"
+#include "Core/Ray.hpp"
 #include "Math/Vector3D.hpp"
 #include "Surface/Material.hpp"
 
@@ -15,7 +15,7 @@ namespace Object {
 
     double DistanceFrom(const Camera& camera) const override;
     Math::Vector3D Normal(const Math::Vector3D& point) const override;
-    bool Intersects(const Math::Ray& ray, Math::Vector3D& intersection) const override;
+    bool Intersects(const Core::Ray& ray, Math::Vector3D& intersection) const override;
 
     Math::Vector3D GetCenter() const;
     double GetRadius() const;

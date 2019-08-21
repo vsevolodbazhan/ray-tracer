@@ -22,9 +22,6 @@ namespace Core {
 
   void Scene::Render(const std::string& filename) {
     SortShapes();
-    for (auto& pixel : *image_.get()) {
-      pixel.color = Trace(Ray(pixel.position, image_->GetProperties(), field_of_view_));
-    }
     image_->Export(filename);
   }
 
@@ -42,7 +39,7 @@ namespace Core {
     });
   }
 
-  RGBColor Scene::Trace(const Math::Ray& ray) {
+  RGBColor Scene::Trace(const Ray& ray) {
     RGBColor color;
     for (const auto& shape : shapes_) {
       Vector3D intersection;
