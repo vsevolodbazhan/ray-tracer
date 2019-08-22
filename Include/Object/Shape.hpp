@@ -17,9 +17,9 @@ namespace Object {
 
     virtual double DistanceFrom(const Camera& camera) const = 0;
     virtual Math::Vector3D Normal(const Math::Vector3D& point) const = 0;
-    virtual bool Intersects(const Core::Ray& ray, Math::Vector3D& intersection) const = 0;
+    virtual bool Intersects(const Core::Ray& ray, Core::RayHit& hit) const = 0;
 
-    Color::RGBColor GetAmbient() const;
+    Surface::Material GetMaterial() const;
 
   private:
     Surface::Material material_;

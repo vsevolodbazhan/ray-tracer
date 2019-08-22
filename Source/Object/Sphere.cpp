@@ -18,7 +18,7 @@ namespace Object {
     return Normalized(point - center_);
   }
 
-  bool Sphere::Intersects(const Core::Ray& ray, Math::Vector3D& intersection) const {
+  bool Sphere::Intersects(const Core::Ray& ray, Core::RayHit& hit) const {
     const Math::Vector3D origin_center = center_ - ray.origin;
     // Find the distance from the ray origin to the intersection point or
     // the point located halfway between two intersection points.
@@ -45,7 +45,10 @@ namespace Object {
     );
     // The closest (or the only) intersection point
     // is to the left of the point located halfway between two intersection points.
-    intersection = ray.origin + ray.direction * (origin_point_distance - point_intersection_distance);
+    // Write info about hit point.
+    hit.intersection = ray.origin + ray.direction * (origin_point_distance - point_intersection_distance);
+    hit.normal = Normal(hit.intersection);
+    hit.material = GetMaterial();
     return true;
   }
 

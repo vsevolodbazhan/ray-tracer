@@ -15,7 +15,7 @@ namespace Object {
 
     double DistanceFrom(const Camera& camera) const override;
     Math::Vector3D Normal(const Math::Vector3D& point) const override;
-    bool Intersects(const Core::Ray& ray, Math::Vector3D& intersection) const override;
+    bool Intersects(const Core::Ray& ray, Core::RayHit& hit) const override;
 
     Math::Vector3D GetCenter() const;
     double GetRadius() const;
