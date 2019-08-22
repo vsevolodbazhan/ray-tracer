@@ -21,21 +21,23 @@ int main() {
     RGBColor(0.0215, 0.1745, 0.0215),
     RGBColor(0.07568, 0.61424, 0.07568),
     RGBColor(0.633, 0.727811, 0.633),
-    0.6 * 128
+    0.6 * 128,
+    0.8
   };
 
   Material ruby{
     RGBColor(0.1745, 0.01175, 0.01175),
     RGBColor(0.61424, 0.04136, 0.04136),
     RGBColor(0.727811, 0.626959, 0.62695),
-    0.6 * 128
+    0.6 * 128,
+    0.6
   };
 
   Scene scene(make_unique<PPMImage>(ImageProperties{1920, 1080}), Camera{{0, 0, 0}, 45});
   scene.AddShape(make_unique<Sphere>(emerald, Vector3D{-3, 0, -16}, 2));
   scene.AddShape(make_unique<Sphere>(ruby, Vector3D{-1, -1.5, -12}, 2));
   scene.AddShape(make_unique<Sphere>(ruby, Vector3D{1.5, -0.5, -18}, 3));
-  scene.AddShape(make_unique<Sphere>(emerald, Vector3D{7, 5, -18}, 4));
+  scene.AddShape(make_unique<Sphere>(emerald, Vector3D{7, 5, -18}, 3));
 
   // lights.push_back(Light(Vec3f(-20, 20,  20), 1.5));
 	//     lights.push_back(Light(Vec3f( 30, 50, -25), 1.8));

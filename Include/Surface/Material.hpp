@@ -8,5 +8,6 @@ namespace Surface {
     Color::RGBColor diffuse;
     Color::RGBColor specular;
     double shininess;
+    double reflectivity;
   };
 }

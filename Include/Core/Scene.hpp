@@ -36,13 +36,14 @@ namespace Core {
   private:
     void SortShapes();
 
-    Color::RGBColor Raytrace(const Graphics::PixelPosition& position, bool supersampling) const;
-    Color::RGBColor Trace(const Ray& ray) const;
-    Color::RGBColor Shade(const RayHit& hit) const;
+    Color::RGBColor Raytrace(const Graphics::PixelPosition& position, bool supersampling, unsigned depth = 1) const;
+    Color::RGBColor Trace(const Ray& ray, unsigned depth) const;
+    Color::RGBColor Shade(const Ray& ray, const RayHit& hit, unsigned depth) const;
 
     bool InShadow(const Math::Vector3D& point, const GenericLight& light) const;
 
     Ray Shadow(const Math::Vector3D& point, const GenericLight& light) const;
+    Ray Reflected(const Ray& ray, const RayHit& hit) const;
 
     GenericImage image_;
     Object::Camera camera_;

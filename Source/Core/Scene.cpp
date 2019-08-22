@@ -41,37 +41,42 @@ namespace Core {
     });
   }
 
-  RGBColor Scene::Raytrace(const Graphics::PixelPosition& position, bool supersampling) const {
+  RGBColor Scene::Raytrace(const Graphics::PixelPosition& position, bool supersampling, unsigned depth) const {
     RGBColor color;
     if (supersampling) {
       std::vector<PixelOffset> sample_offsets{
         {0.25, 0.25}, {0.75, 0.25}, {0.5, 0.5}, {0.25, 0.75}, {0.75, 0.75}
       };
       for (const auto& offset : sample_offsets) {
-        color += Trace(CreateRay(position, offset, image_->GetProperties(), camera_)) / 5;
+        color += Trace(CreateRay(position, offset, image_->GetProperties(), camera_), depth) / 5;
       }
     } else {
-      color = Trace(CreateRay(position, {0.5, 0.5}, image_->GetProperties(), camera_));
+      color = Trace(CreateRay(position, {0.5, 0.5}, image_->GetProperties(), camera_), depth);
     }
     return color;
   }
 
-  RGBColor Scene::Trace(const Ray& ray) const {
+  RGBColor Scene::Trace(const Ray& ray, unsigned depth) const {
     RGBColor color;
     for (const auto& shape : shapes_) {
       RayHit hit;
       if (shape->Intersects(ray, hit)) {
-        color = Shade(hit);
+        color = Shade(ray, hit, depth);
       }
     }
     return color;
   }
 
-  RGBColor Scene::Shade(const RayHit& hit) const {
+  RGBColor Scene::Shade(const Ray& ray, const RayHit& hit, unsigned depth) const {
     RGBColor radiance;
-    for (const auto& light : lights_) {
-      if (!InShadow(hit.intersection, light)) {
-        radiance += light->Illumination(hit, camera_);
+    if (depth <= 4) {
+      for (const auto& light : lights_) {
+        if (!InShadow(hit.intersection, light)) {
+          radiance += light->Illumination(hit, camera_);
+        }
+      }
+      if (hit.material.reflectivity > 0.0) {
+        radiance += hit.material.reflectivity * Trace(Reflected(ray, hit), depth + 1);
       }
     }
     return radiance;
@@ -91,5 +96,10 @@ namespace Core {
   Ray Scene::Shadow(const Vector3D& point, const GenericLight& light) const {
     const Vector3D direction_toward_light = Negated(light->Direction(point));
     return Ray{point + (0.01 * direction_toward_light), direction_toward_light};
+  }
+
+  Ray Scene::Reflected(const Ray& ray, const RayHit& hit) const {
+    const Vector3D reflection_direciton = Normalized(ray.direction - hit.normal * 2.0 * Dot(ray.direction, hit.normal));
+    return Ray{hit.intersection + (0.01 * reflection_direciton), reflection_direciton};
   }
 }
