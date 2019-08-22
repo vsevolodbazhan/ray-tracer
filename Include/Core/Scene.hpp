@@ -40,6 +40,10 @@ namespace Core {
     Color::RGBColor Trace(const Ray& ray) const;
     Color::RGBColor Shade(const RayHit& hit) const;
 
+    bool InShadow(const Math::Vector3D& point, const GenericLight& light) const;
+
+    Ray Shadow(const Math::Vector3D& point, const GenericLight& light) const;
+
     GenericImage image_;
     Object::Camera camera_;
     double field_of_view_ = 0;

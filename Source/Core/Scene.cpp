@@ -37,7 +37,7 @@ namespace Core {
 
   void Scene::SortShapes() {
     std::sort(shapes_.begin(), shapes_.end(), [this](const GenericShape& lhs, const GenericShape& rhs) {
-      return lhs->DistanceFrom(camera_) < rhs->DistanceFrom(camera_);
+      return lhs->DistanceFrom(camera_) > rhs->DistanceFrom(camera_);
     });
   }
 
@@ -70,8 +70,26 @@ namespace Core {
   RGBColor Scene::Shade(const RayHit& hit) const {
     RGBColor radiance;
     for (const auto& light : lights_) {
-      radiance += light->Illumination(hit, camera_);
+      if (!InShadow(hit.intersection, light)) {
+        radiance += light->Illumination(hit, camera_);
+      }
     }
     return radiance;
+  }
+
+  bool Scene::InShadow(const Vector3D& point, const GenericLight& light) const {
+    const Ray shadow_ray = Shadow(point, light);
+    RayHit hit;
+    for (const GenericShape& shape : shapes_) {
+      if (shape->Intersects(shadow_ray, hit)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  Ray Scene::Shadow(const Vector3D& point, const GenericLight& light) const {
+    const Vector3D direction_toward_light = Negated(light->Direction(point));
+    return Ray{point + (0.01 * direction_toward_light), direction_toward_light};
   }
 }
