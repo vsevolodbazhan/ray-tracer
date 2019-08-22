@@ -59,11 +59,19 @@ namespace Core {
   RGBColor Scene::Trace(const Ray& ray) const {
     RGBColor color;
     for (const auto& shape : shapes_) {
-      Vector3D intersection;
-      if (shape->Intersects(ray, intersection)) {
-        color = shape->GetAmbient();
+      RayHit hit;
+      if (shape->Intersects(ray, hit)) {
+        color = Shade(hit);
       }
     }
     return color;
+  }
+
+  RGBColor Scene::Shade(const RayHit& hit) const {
+    RGBColor radiance;
+    for (const auto& light : lights_) {
+      radiance += light->Illumination(hit, camera_);
+    }
+    return radiance;
   }
 }

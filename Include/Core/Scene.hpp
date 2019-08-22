@@ -38,6 +38,7 @@ namespace Core {
 
     Color::RGBColor Raytrace(const Graphics::PixelPosition& position, bool supersampling) const;
     Color::RGBColor Trace(const Ray& ray) const;
+    Color::RGBColor Shade(const RayHit& hit) const;
 
     GenericImage image_;
     Object::Camera camera_;
