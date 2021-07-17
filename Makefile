@@ -13,7 +13,7 @@ SOURCES = $(shell find $(SOUCRE_DIR) -name *.cpp)
 OBJECTS = $(patsubst $(SOUCRE_DIR)/%, $(BUILD_DIR)/%, $(SOURCES:.cpp=.o))
 DEPENDS = $(OBJECTS:.o=.d)
 
-CXX = g++-9
+CXX = g++
 CXX_FLAGS = -O2 -std=c++17 -Werror -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast               \
 	-Wcast-align -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion -Wmisleading-indentation      \
 	-Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wnull-dereference -Wuseless-cast -Wdouble-promotion \
