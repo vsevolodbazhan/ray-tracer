@@ -112,20 +112,6 @@ namespace Core {
   }
 
   Ray Scene::Refracted(const Ray& ray, const RayHit& hit) const {
-    // double cosi = - std::max(-1.0, std::min(1.0, Dot(ray.direction, hit.normal)));
-    // double etai = 1, etat = hit.material.refractive_index;
-    // Vector3D n = hit.normal;
-    // if (cosi < 0) { // if the ray is inside the object, swap the indices and invert the normal to get the correct result
-    //     cosi = -cosi;
-    //     std::swap(etai, etat);
-    //     n.Negate();
-    //     double eta = etai / etat;
-    //     double k = 1 - eta*eta*(1 - cosi*cosi);
-    //     const Vector3D refraction_direciton = k < 0 ? Vector3D{0,0,0} : Normalized(ray.direction*eta + n*(eta * cosi - std::sqrt(k)));
-    //     return Ray{hit.intersection - (0.01 * refraction_direciton), refraction_direciton};
-    // }
-    // double eta = etai / etat;
-    // double k = 1 - eta*eta*(1 - cosi*cosi);
     const Vector3D l = ray.direction;
     double c = Dot(hit.normal, l);
     if (c < 0) {
@@ -135,15 +121,5 @@ namespace Core {
     const double root = std::sqrt(1 - std::pow(r, 2) * (1 - std::pow(c, 2)));
     const Vector3D refraction_direciton = Normalized(r * l + (r * c - root) * hit.normal);
     return Ray{hit.intersection + (0.01 * refraction_direciton), refraction_direciton};
-
-//     const Vector l = Direction(point);
-//   double c = Dot(normal, l);
-//   if (c < 0) {
-//     c = Dot(Negated(normal), l);
-//   }
-//   const double r = BASE_REFRACTIVE_INDEX / refractive_index;
-//   const double root = std::sqrt(1 - std::pow(r, 2) * (1 - std::pow(c, 2)));
-//   return Normalized(r * l + (r * c - root) * normal);
-// }
   }
 }
