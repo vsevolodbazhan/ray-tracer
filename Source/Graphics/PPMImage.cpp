@@ -1,5 +1,7 @@
 #include "Graphics/PPMImage.hpp"
 
+#include <iostream>
+
 namespace Graphics {
   PPMImage::PPMImage() : Image() {}
 
@@ -13,6 +15,36 @@ namespace Graphics {
         << ConvertToOctet(pixel.color.GetGreen())
         << ConvertToOctet(pixel.color.GetBlue());
     }
+    file.close();
+  }
+
+  void PPMImage::Import(const std::string& filename) {
+    std::ifstream file(filename + ".ppm", std::ios::binary);
+    std::string subformat;
+    file >> subformat;
+    std::cout << subformat << std::endl;
+
+    std::size_t width, height;
+    file >> width >> height;
+    std::cout << width << " " << height << std::endl;
+
+    std::list<Pixel>& pixels = GetPixels();
+    pixels.clear();
+    pixels.resize(width * height);
+
+    for (auto& pixel : pixels) {
+      uint8_t component;
+      file >> component;
+      std::cout << component << std::endl;
+      pixel.color.SetRed(ConverFromOctet(component));
+      file >> component;
+      std::cout << component / 255 << std::endl;
+      pixel.color.SetGreen(ConverFromOctet(component));
+      file >> component;
+      std::cout << component / 255 << std::endl;
+      pixel.color.SetBlue(ConverFromOctet(component));
+    }
+
     file.close();
   }
 }

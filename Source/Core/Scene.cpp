@@ -58,13 +58,18 @@ namespace Core {
 
   RGBColor Scene::Trace(const Ray& ray, unsigned depth) const {
     RGBColor color;
+    bool found = false;
     for (const auto& shape : shapes_) {
       RayHit hit;
       if (shape->Intersects(ray, hit)) {
         color = Shade(ray, hit, depth);
+        found = true;
       }
     }
-    return color;
+    if (found) {
+      return color;
+    }
+    return RGBColor(0.2, 0.7, 0.8);
   }
 
   RGBColor Scene::Shade(const Ray& ray, const RayHit& hit, unsigned depth) const {
@@ -77,6 +82,9 @@ namespace Core {
       }
       if (hit.material.reflectivity > 0.0) {
         radiance += hit.material.reflectivity * Trace(Reflected(ray, hit), depth + 1);
+      }
+      if (hit.material.refractivity > 0.0) {
+        radiance += hit.material.refractivity * Trace(Refracted(ray, hit), depth + 1);
       }
     }
     return radiance;
@@ -101,5 +109,41 @@ namespace Core {
   Ray Scene::Reflected(const Ray& ray, const RayHit& hit) const {
     const Vector3D reflection_direciton = Normalized(ray.direction - hit.normal * 2.0 * Dot(ray.direction, hit.normal));
     return Ray{hit.intersection + (0.01 * reflection_direciton), reflection_direciton};
+  }
+
+  Ray Scene::Refracted(const Ray& ray, const RayHit& hit) const {
+    // double cosi = - std::max(-1.0, std::min(1.0, Dot(ray.direction, hit.normal)));
+    // double etai = 1, etat = hit.material.refractive_index;
+    // Vector3D n = hit.normal;
+    // if (cosi < 0) { // if the ray is inside the object, swap the indices and invert the normal to get the correct result
+    //     cosi = -cosi;
+    //     std::swap(etai, etat);
+    //     n.Negate();
+    //     double eta = etai / etat;
+    //     double k = 1 - eta*eta*(1 - cosi*cosi);
+    //     const Vector3D refraction_direciton = k < 0 ? Vector3D{0,0,0} : Normalized(ray.direction*eta + n*(eta * cosi - std::sqrt(k)));
+    //     return Ray{hit.intersection - (0.01 * refraction_direciton), refraction_direciton};
+    // }
+    // double eta = etai / etat;
+    // double k = 1 - eta*eta*(1 - cosi*cosi);
+    const Vector3D l = ray.direction;
+    double c = Dot(hit.normal, l);
+    if (c < 0) {
+      c = Dot(Negated(hit.normal), l);
+    }
+    const double r = 1.0 / hit.material.refractive_index;
+    const double root = std::sqrt(1 - std::pow(r, 2) * (1 - std::pow(c, 2)));
+    const Vector3D refraction_direciton = Normalized(r * l + (r * c - root) * hit.normal);
+    return Ray{hit.intersection + (0.01 * refraction_direciton), refraction_direciton};
+
+//     const Vector l = Direction(point);
+//   double c = Dot(normal, l);
+//   if (c < 0) {
+//     c = Dot(Negated(normal), l);
+//   }
+//   const double r = BASE_REFRACTIVE_INDEX / refractive_index;
+//   const double root = std::sqrt(1 - std::pow(r, 2) * (1 - std::pow(c, 2)));
+//   return Normalized(r * l + (r * c - root) * normal);
+// }
   }
 }

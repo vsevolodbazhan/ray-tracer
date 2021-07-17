@@ -49,4 +49,4 @@ namespace Math {
     rhs *= lhs;
     return rhs;
   }
-}
+} // namespace Math

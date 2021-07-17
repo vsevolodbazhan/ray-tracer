@@ -37,4 +37,12 @@ namespace Graphics {
   uint8_t Image::ConvertToOctet(double compenent) const {
     return static_cast<uint8_t>(255 * compenent);
   }
+
+  double Image::ConverFromOctet(uint8_t compenent) const {
+    return static_cast<double>(compenent / 255);
+  }
+
+  std::list<Pixel>& Image::GetPixels() {
+    return pixels_;
+  }
 }

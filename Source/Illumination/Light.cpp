@@ -3,7 +3,7 @@
 namespace Illumination {
   Light::Light(
     const Math::Vector3D& position,
-    const Intensity& intensity)
+    double intensity)
     : position_(position),
     intensity_(intensity) {}
 
@@ -23,26 +23,23 @@ namespace Illumination {
     const Math::Vector3D direction_toward_light = Negated(Direction(hit.intersection));
     const Math::Vector3D view = View(camera, hit.intersection);
     const Math::Vector3D halfway = Halfway(direction_toward_light, view);
-    return AmbientComponent(hit.material.ambient) +
+    return hit.material.color *
+           (AmbientComponent(hit.material.ambient) +
            DiffuseComponent(hit.material.diffuse, direction_toward_light, hit.normal) +
-           SpecularComponent(hit.material.specular, hit.material.shininess, halfway, hit.normal);
+           SpecularComponent(hit.material.specular, hit.material.shininess, halfway, hit.normal));
   }
 
-  Color::RGBColor Light::AmbientComponent(const Color::RGBColor& ambient) {
-    return intensity_.ambient * ambient;
+  double Light::AmbientComponent(double ambient) {
+    return intensity_ * ambient;
   }
 
-  Color::RGBColor Light::DiffuseComponent(const Color::RGBColor& diffuse, const Math::Vector3D& direction_toward_light,
+  double Light::DiffuseComponent(double diffuse, const Math::Vector3D& direction_toward_light,
                                           const Math::Vector3D& normal) {
-    return intensity_.diffuse * diffuse * std::max(Dot(direction_toward_light, normal), 0.0);
+    return intensity_ * diffuse * std::max(Dot(direction_toward_light, normal), 0.0);
   }
 
-  Color::RGBColor Light::SpecularComponent(const Color::RGBColor& specular, double shininess,
+  double Light::SpecularComponent(double specular, double shininess,
                                            const Math::Vector3D& halfway, const Math::Vector3D& normal) {
-    return intensity_.specular * specular * std::pow(std::max(Dot(halfway, normal), 0.0), shininess);
-  }
-
-  double Light::GetAmbientIntesity() const {
-    return intensity_.ambient;
+    return intensity_ * specular * std::pow(std::max(Dot(halfway, normal), 0.0), shininess);
   }
 }

@@ -22,6 +22,10 @@ namespace Color {
     RGBColor& operator*=(double scalar);
     RGBColor& operator/=(double scalar);
 
+    void SetRed(double red);
+    void SetGreen(double green);
+    void SetBlue(double blue);
+
     double GetRed() const;
     double GetGreen() const;
     double GetBlue() const;
@@ -72,4 +76,4 @@ namespace Color {
     rhs /= lhs;
     return rhs;
   }
-}
+} // namespace Color

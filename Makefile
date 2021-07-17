@@ -19,7 +19,7 @@ CXX_FLAGS = -O2 -std=c++17 -Werror -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wo
 	-Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wnull-dereference -Wuseless-cast -Wdouble-promotion \
 
 CHECK = cppcheck
-CHECK_FLAGS = -I $(INCLUDE_DIR) --language=c++ --std=c++17 --enable=all --suppress=missingIncludeSystem .
+CHECK_FLAGS = -I $(INCLUDE_DIR) --std=c++17 --enable=all --quiet --suppress=missingIncludeSystem .
 
 .PHONY: all
 all: $(TARGET)

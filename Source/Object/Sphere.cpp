@@ -46,7 +46,11 @@ namespace Object {
     // The closest (or the only) intersection point
     // is to the left of the point located halfway between two intersection points.
     // Write info about hit point.
-    hit.intersection = ray.origin + ray.direction * (origin_point_distance - point_intersection_distance);
+    double t = (origin_point_distance - point_intersection_distance);
+    if (t < 0) {
+      t = (origin_point_distance + point_intersection_distance);
+    }
+    hit.intersection = ray.origin + ray.direction * t;
     hit.normal = Normal(hit.intersection);
     hit.material = GetMaterial();
     return true;

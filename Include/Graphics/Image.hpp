@@ -14,11 +14,13 @@ namespace Graphics {
   struct ImageProperties {
     std::size_t width = 0;
     std::size_t height = 0;
-    double aspect_ratio = static_cast<double>(width) / static_cast<double>(height);
+    Color::RGBColor background = Color::RGBColor(0, 0, 0);
+    double aspect_ratio =
+      static_cast<double>(width) / static_cast<double>(height);
   };
 
   class Image {
-  public:
+    public:
     using Pixels = std::list<Pixel>;
     using PixelsIterator = Pixels::iterator;
     using ConstPixelsIterator = Pixels::const_iterator;
@@ -38,11 +40,14 @@ namespace Graphics {
 
     ImageProperties GetProperties() const;
 
-  protected:
+    protected:
     uint8_t ConvertToOctet(double compenent) const;
+    double ConverFromOctet(uint8_t compenent) const;
 
-  private:
+    std::list<Pixel>& GetPixels();
+
+    private:
     ImageProperties properties_;
     std::list<Pixel> pixels_;
   };
-}
+} // namespace Graphics

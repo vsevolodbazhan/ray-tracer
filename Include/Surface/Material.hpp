@@ -4,10 +4,13 @@
 
 namespace Surface {
   struct Material {
-    Color::RGBColor ambient;
-    Color::RGBColor diffuse;
-    Color::RGBColor specular;
-    double shininess;
+    Color::RGBColor color;
+    double ambient;
+    double diffuse;
+    double specular;
     double reflectivity;
+    double refractivity;
+    double refractive_index;
+    double shininess;
   };
 }

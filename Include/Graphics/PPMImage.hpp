@@ -9,5 +9,6 @@ namespace Graphics {
     explicit PPMImage(const ImageProperties& properties);
 
     void Export(const std::string& filename) const override;
+    void Import(const std::string& filename);
   };
 }

@@ -19,4 +19,4 @@ namespace Graphics {
     PixelPosition position;
     Color::RGBColor color;
   };
-}
+} // namespace Graphics
